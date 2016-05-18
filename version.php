@@ -28,4 +28,4 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version = 2016032400; // The current module version (Date: YYYYMMDDXX).
 $plugin->requires = 2016032400; // Requires this Moodle version.
-$plugin->component = 'local_tics331'; // To check on upgrade, that module sits in correct place.
+$plugin->component = 'local_simulador'; // To check on upgrade, that module sits in correct place.
