@@ -32,7 +32,7 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador'));
+$PAGE->set_url(new moodle_url('/local/simulador/index.php'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_title('Inscripcion de cursos');
 

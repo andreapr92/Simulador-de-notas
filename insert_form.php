@@ -4,7 +4,9 @@
 function curso(){
 	global $DB, $USER;
 	
-	//variables recibidas de index.php
+	//variables recibidas de index.php 
+	
+	//TABLA CURSOS
 	$nombre = $_POST["curso"];
 	$duracion;
 	$grado;
@@ -36,16 +38,26 @@ function curso(){
 	echo $grado;
 	echo $pdeseado;
 	
-$record = new stdClass();
-$record->nombre         = $nombre;
-$record->duracion         = $duracion;
-$record->dificultad         = $grado;
-$record->pdeseado         = $pdeseado;
-$record->id = $USER->id;
+$recordcursos = new stdClass();
+$recordcursos->nombre         = $nombre;
+$recordcursos->duracion         = $duracion;
+$recordcursos->dificultad         = $grado;
+$recordcursos->pdeseado         = $pdeseado;
 
 
+$DB->insert_record('cursos', $recordcursos);
 
-$lastinsertid = $DB->insert_record('cursos', $record);
+//TABLA EVALUACIONES
+
+$evaluacion = $_POST["evaluacion"];
+$ponderacion = $_POST["ponderacion"];
+
+
+$recordevaluacion = new stdClass();
+$recordcursos->nombre         = $evaluacion;
+$recordcursos->ponderacion         = $ponderacion;
+
+$DB->insert_record('evaluaciones', $recordevaluacion);
 
 }
 
