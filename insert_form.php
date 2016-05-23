@@ -31,6 +31,10 @@ function curso(){
 	{
 		$grado=2;
 	}
+	elseif ($_POST["grado"] == "grado3")
+	{
+		$grado=3;
+	}
 	//SEGUIR AGREGANDO
 
 	echo $nombre;

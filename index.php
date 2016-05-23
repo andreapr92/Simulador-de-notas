@@ -43,7 +43,6 @@ echo $OUTPUT->header();
 
 // Here goes the content
 
-
 ?>
 <center>Inscripción de Curso </center>
 <br>
