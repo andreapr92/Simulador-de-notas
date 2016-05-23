@@ -1,12 +1,14 @@
 <?php
 //moodleform is defined in formslib.php
-require_once("$CFG->libdir/formslib.php");
-require_once(dirname(dirname(dirname(dirname(__FILE__))))."/config.php");
+
+defined('MOODLE_INTERNAL') || die();
+require_once ($CFG->dirroot . '/course/moodleform_mod.php');
+require_once ($CFG->dirroot . '/libdir/formslib.php');
  
 class edit_form extends moodleform {
     //Add elements to form
     public function definition() {
-        global $CFG;
+         global $COURSE, $DB, $CFG;
  
         $mform = $this->_form; // Don't forget the underscore! 
  
@@ -18,5 +20,7 @@ class edit_form extends moodleform {
     function validation($data, $files) {
         return array();
     }
+    
+
 }
 ?>

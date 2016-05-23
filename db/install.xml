@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/simulador/db" VERSION="20160518" COMMENT="XMLDB file for Moodle local/simulador"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="cursos" COMMENT="Default comment for local_simulador, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nombre" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="duracion" TYPE="binary" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="dificultad" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="5" SEQUENCE="false"/>
+        <FIELD NAME="pdeseado" TYPE="number" LENGTH="2" NOTNULL="true" SEQUENCE="false" DECIMALS="1"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="evaluaciones" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nombre" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ponderacion" TYPE="int" LENGTH="3" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="cursoid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="cursoid" TYPE="foreign" FIELDS="cursoid" REFTABLE="cursos" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="notas" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nota" TYPE="number" LENGTH="2" NOTNULL="true" SEQUENCE="false" DECIMALS="1"/>
+        <FIELD NAME="dia" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="mes" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluacionesid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="evaluacionesid" TYPE="foreign" FIELDS="evaluacionesid" REFTABLE="evaluaciones" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

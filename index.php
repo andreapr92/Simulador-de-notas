@@ -32,7 +32,7 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/tics331'));
+$PAGE->set_url(new moodle_url('/local/simulador'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_title('Inscripcion de cursos');
 
@@ -44,19 +44,18 @@ echo $OUTPUT->header();
 // Here goes the content
 
 
-
 ?>
 <center>Inscripción de Curso </center>
 <br>
 
-<form action="hola.php" method="post">
+<form action="insert_form.php" method="post">
 
 
  Nombre Curso: <input type="text" name="curso">
  Duración
-<select>
-  <option value="duracion1">Semestral</option>
-  <option value="duracion2">Anual</option>
+<select name="duracion">
+  <option value="semestral">Semestral</option>
+  <option value="anual">Anual</option>
 </select>
 
 
@@ -79,17 +78,17 @@ echo $OUTPUT->header();
 
 
 Grado de dificultad
-<select>
+<select name="grado">
   <option value="grado1">1</option>
   <option value="grado2">2</option>
-  <option value="grado2">3</option>
-  <option value="grado2">4</option>
-  <option value="grado2">5</option>
-  <option value="grado2">6</option>
-  <option value="grado2">7</option>
-  <option value="grado2">8</option>
-  <option value="grado2">9</option>
-  <option value="grado2">10</option>
+  <option value="grado3">3</option>
+  <option value="grado4">4</option>
+  <option value="grado5">5</option>
+  <option value="grado6">6</option>
+  <option value="grado7">7</option>
+  <option value="grado8">8</option>
+  <option value="grado9">9</option>
+  <option value="grado10">10</option>
 </select>
 <br>
 Promedio Deseado:
@@ -100,6 +99,7 @@ Promedio Deseado:
 </form>
 
 <?php 
+
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
