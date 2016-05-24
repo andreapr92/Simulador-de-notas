@@ -35,12 +35,43 @@ function curso(){
 	{
 		$grado=3;
 	}
-	//SEGUIR AGREGANDO
-
+	elseif ($_POST["grado"] == "grado4")
+	{
+		$grado=4;
+	}
+	elseif ($_POST["grado"] == "grado5")
+	{
+		$grado=5;
+	}
+	elseif ($_POST["grado"] == "grado6")
+	{
+		$grado=6;
+	}
+	elseif ($_POST["grado"] == "grado7")
+	{
+		$grado=7;
+	}
+	elseif ($_POST["grado"] == "grado8")
+	{
+		$grado=8;
+	}
+	elseif ($_POST["grado"] == "grado9")
+	{
+		$grado=9;
+	}
+	elseif ($_POST["grado"] == "grado10")
+	{
+		$grado=10;
+	}
+	
+	
+//VER SI VARIABLES SON NULL
 	echo $nombre;
 	echo $duracion;
 	echo $grado;
 	echo $pdeseado;
+	
+//Insertar en la tabla cursos de la base de datos
 	
 $recordcursos = new stdClass();
 $recordcursos->nombre         = $nombre;
@@ -50,6 +81,7 @@ $recordcursos->pdeseado         = $pdeseado;
 
 
 $DB->insert_record('cursos', $recordcursos);
+
 
 //TABLA EVALUACIONES
 

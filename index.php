@@ -23,6 +23,7 @@
  */
 // Minimum for Moodle to work, the basic libraries
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once($CFG->libdir.'/adminlib.php');
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -96,6 +97,7 @@ Promedio Deseado:
 <br><input type="submit">
 
 </form>
+<br>
 
 <?php 
 

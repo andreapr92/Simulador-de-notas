@@ -16,13 +16,14 @@
 
 /**
  *
- * @package local
- * @subpackage tics331
- * @copyright 2012-onwards Jorge Villalon <jorge.villalon@uai.cl>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* @package local
+* @subpackage tics331
+* @copyright 2012-onwards Jorge Villalon <jorge.villalon@uai.cl>
+* @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 // Minimum for Moodle to work, the basic libraries
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once($CFG->libdir.'/adminlib.php');
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -32,9 +33,9 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador/notas.php'));
+$PAGE->set_url(new moodle_url('/local/simulador/inicio.php'));
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_title('Inscripcion de notas');
+$PAGE->set_title('Inicio');
 
 
 
@@ -45,42 +46,24 @@ echo $OUTPUT->header();
 
 ?>
 
-
-    <td>Notas</td> 
-  </tr>
-  <tr>
-    <td><select>
-  		<option value="Control">Control</option>
- 		<option value="Prueba">Prueba</option>
-		</select>
-	</td>
-    <td><input type="number" name="nota" min="1" max="7" step="0.1"></td> 
-  </tr>
-</table>
+<center>Cursos</center>
 <br>
-<button onclick="agregarEvaluacion()">Agregar evaluación</button>
 
-<script>
-function agregarEvaluacion() {
-    var table = document.getElementById("inscripcionNotas");
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = <select>
-  		<option value="Control">Control</option>
- 		<option value="Prueba">Prueba</option>
-		</select>;
-    cell2.innerHTML = <input type="number" name="nota" min="1" max="7" step="0.1">;
+<?php
+
+//Se muestran cursos ingresados de la base de datos
+$sql1 = 'SELECT nombre 
+		FROM mdl_cursos';
+$result = $DB->get_records_sql ( $sql1 );
+
+foreach ($result as $curso)
+{
+	echo "$curso <br>";
 }
-</script>
-
-
-<br><input type="submit" name="Guardar">
-
-</form>
-
-<?php 
+	
+echo'<a href="'.new moodle_url("/local/simulador/index.php").'" > Agregar curso </a>';
 
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
+
