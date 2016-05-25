@@ -33,9 +33,9 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador/inicio.php'));
+$PAGE->set_url(new moodle_url('/local/simulador/visor.php'));
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_title('Inicio');
+$PAGE->set_title('Cursos');
 
 
 
@@ -54,34 +54,47 @@ echo $OUTPUT->header();
 //Se seleccionan cursos ingresados de la base de datos
 $sql1 = 'SELECT nombre 
 		FROM mdl_cursos';
+$sql2 = 'SELECT nota
+		FROM mdl_notas';
+$sql3 = 'SELECT ponderacion
+		FROM mdl_evaluaciones';
+
 $result = $DB->get_records_sql ( $sql1 );
+$result2 = $DB->get_records_sql ( $sql2 );
+$result3 = $DB->get_records_sql ( $sql3 );
 
 
+//calculo de promedio
+foreach ($result3 as $ponderacion)
+{
+	$ponderacion = $ponderacion/100;
+}
+
+$promediopond = result3 * (array_sum($result2)/count($result2));
+$promedio = array_sum($promediopond);
+
+
+
+$i;
 //Mostrar cada curso en una fila de la tabla
 
-echo '<table style="width:100%">';
+echo '<table style="width:100%"><tr>';
 		
 foreach ($result as $curso)
 {
 	echo '
-	<tr>
 	<td>
 		$curso 
-	</td>
-	</tr>';
+	</td>';
+$i++;
+if ($i%2==0){
+	echo '</tr><tr>';
+		}
 }
 echo '</table>';
 		
 
-//Redirigir a Inscripcion de cursos 
-echo'<br><a href="'.new moodle_url("/local/simulador/index.php").'" > Agregar curso </a><br>';
-
-//Redirigir a Visor de cursos
-echo'<a href="'.new moodle_url("/local/simulador/visor.php").'" > GUARDAR </a>';
-
-
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
-
 
