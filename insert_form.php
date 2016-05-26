@@ -1,100 +1,56 @@
 <?php
+// Minimum for Moodle to work, the basic libraries
+require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/config.php');
+global $DB, $USER;
 
-//Insertar en la base de datos
-function curso(){
-	global $DB, $USER;
-	
-	//variables recibidas de index.php 
-	
-	//TABLA CURSOS
-	$nombre = $_POST["curso"];
-	$duracion;
-	$grado;
-	$pdeseado = $_POST["pdeseado"];
-	
-	
-	
-	if ($_POST["duracion"] == "semestral")
-	{
-		$duracion=0;
-	}
-	elseif ($_POST["duracion"] == "anual")
-	{
-		$duracion=1;
-	}
-	
-	if ($_POST["grado"] == "grado1")
-	{
-		$grado=1;
-	}
-	elseif ($_POST["grado"] == "grado2")
-	{
-		$grado=2;
-	}
-	elseif ($_POST["grado"] == "grado3")
-	{
-		$grado=3;
-	}
-	elseif ($_POST["grado"] == "grado4")
-	{
-		$grado=4;
-	}
-	elseif ($_POST["grado"] == "grado5")
-	{
-		$grado=5;
-	}
-	elseif ($_POST["grado"] == "grado6")
-	{
-		$grado=6;
-	}
-	elseif ($_POST["grado"] == "grado7")
-	{
-		$grado=7;
-	}
-	elseif ($_POST["grado"] == "grado8")
-	{
-		$grado=8;
-	}
-	elseif ($_POST["grado"] == "grado9")
-	{
-		$grado=9;
-	}
-	elseif ($_POST["grado"] == "grado10")
-	{
-		$grado=10;
-	}
-	
-	
-//VER SI VARIABLES SON NULL
-	echo $nombre;
-	echo $duracion;
-	echo $grado;
-	echo $pdeseado;
-	
-//Insertar en la tabla cursos de la base de datos
-	
-$recordcursos = new stdClass();
-$recordcursos->nombre         = $nombre;
-$recordcursos->duracion         = $duracion;
-$recordcursos->dificultad         = $grado;
-$recordcursos->pdeseado         = $pdeseado;
+// variables recibidas de index.php
+
+// TABLA CURSOS
+$nombre = required_param ( 'curso', PARAM_ALPHA );
+$pdeseado = required_param ( 'pdeseado', PARAM_NUMBER );
+$duracion = required_param ( 'duracion', PARAM_ALPHA );
+$duracion = $duracion === 'anual' ? 1 : 0;
+$grado = required_param ( 'grado', PARAM_INT );
+
+// VER SI VARIABLES SON NULL
+echo $nombre;
+echo $duracion;
+echo $grado;
+echo $pdeseado;
+
+// Insertar en la tabla cursos de la base de datos
+
+$recordcursos = new stdClass ();
+$recordcursos->nombre = $nombre;
+$recordcursos->duracion = $duracion;
+$recordcursos->dificultad = $grado;
+$recordcursos->pdeseado = $pdeseado;
+
+$idcurso = $DB->insert_record ( 'cursos', $recordcursos );
+
+// TABLA EVALUACIONES
+
+$evaluacion = $_POST ["evaluacion"];
+$ponderacion = $_POST ["ponderacion"];
+$evaluacion2 = $_POST ["evaluacion2"];
+$ponderacion2 = $_POST ["ponderacion2"];
 
 
-$DB->insert_record('cursos', $recordcursos);
+//evaluacion 1
+$recordevaluacion1 = new stdClass ();
+
+$recordevaluacion1->nombre = $evaluacion;
+$recordevaluacion1->ponderacion = $ponderacion;
+$recordevaluacion1->cursoid = $idcurso;
+
+//evaluacion 2
+$recordevaluacion2 = new stdClass ();
+
+$recordevaluacion2->nombre = $evaluacion2;
+$recordevaluacion2->ponderacion = $ponderacion2;
+$recordevaluacion2->cursoid = $idcurso;
+
+$recordevaluaciones = array($recordevaluacion1, $recordevaluacion2);
 
 
-//TABLA EVALUACIONES
-
-$evaluacion = $_POST["evaluacion"];
-$ponderacion = $_POST["ponderacion"];
-
-
-$recordevaluacion = new stdClass();
-$recordcursos->nombre         = $evaluacion;
-$recordcursos->ponderacion         = $ponderacion;
-
-$DB->insert_record('evaluaciones', $recordevaluacion);
-
-}
-
-curso();
+$idevaluaciones = $DB->insert_record ( 'evaluaciones', $recordevaluaciones );

@@ -23,3 +23,13 @@
  */
 // PLUGIN MINIMUM STRINGS.
 $string ['pluginname'] = 'TICS331 example';
+//Course Table
+$string ['tituloindex'] = 'Course Inscription ';
+$string ['nombrecurso']='Course Name';
+$string ['duracioncurso']='Duration';
+$string['semestral']='Biannual';
+$string['anual']='Annual';
+$string['evaluaciones']='Evaluations';
+$string['ponderacion']='Weight';
+$string ['grado']='Level of difficulty';
+$string['pdeseado']='Expected Average';

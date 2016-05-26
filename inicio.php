@@ -66,7 +66,7 @@ foreach ($result as $curso)
 	echo '
 	<tr>
 	<td>
-		$curso 
+	' . $curso . '
 	</td>
 	</tr>';
 }
