@@ -37,11 +37,27 @@ $ponderacion2 = $_POST ["ponderacion2"];
 
 
 //evaluacion 1
+$sql1 = 'SELECT nombre, id
+		FROM mdl_cursos';
+
+$result = $DB->get_records_sql ( $sql1 );
+
+foreach ( $result as $llave1 => $dato1 ) {
+	foreach ( $dato1 as $llave2 => $id ) {
+		
+		
+	}
+
+}
+
+
+
+
 $recordevaluacion1 = new stdClass ();
 
 $recordevaluacion1->nombre = $evaluacion;
 $recordevaluacion1->ponderacion = $ponderacion;
-$recordevaluacion1->cursoid = $idcurso;
+$recordevaluacion1->cursoid = $id;
 
 //evaluacion 2
 $recordevaluacion2 = new stdClass ();

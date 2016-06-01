@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -25,12 +25,12 @@
 $string ['pluginname'] = 'TICS331 ejemplo';
 
 //TABLA CURSOS
-$string ['tituloindex'] = 'Inscripción de Curso';
+$string ['tituloindex'] = 'InscripciÃ³n de Curso';
 $string ['nombrecurso']='Nombre Curso';
-$string ['duracioncurso']='Duración';
+$string ['duracioncurso']='DuraciÃ³n';
 $string['semestral']='Semestral';
 $string['anual']='Anual';
 $string['evaluaciones']='Evaluaciones';
-$string['ponderacion']='Ponderación';
+$string['ponderacion']='PonderaciÃ³n';
 $string ['grado']='Grado de dificultad';
 $string['pdeseado']='Promedio deseado';

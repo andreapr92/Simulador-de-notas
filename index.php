@@ -22,7 +22,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // Minimum for Moodle to work, the basic libraries
-echo '<meta charset = UTF-8>';
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
@@ -51,9 +50,9 @@ echo
 <form action="insert_form.php" method="post">'
 
 
-. get_string('nombrecurso','local_simulador') .': <input type="text" name="curso">
+. get_string('nombrecurso','local_simulador') .': <input type="text" name="curso" id=1>
  ' . get_string('duracioncurso','local_simulador') . '
-<select name="duracion">
+<select name="duracion" id=2>
   <option value="semestral"> ' . get_string('semestral','local_simulador') . '</option>
   <option value="anual"> ' . get_string('anual','local_simulador') . '</option>
 </select>
@@ -68,12 +67,12 @@ echo
     <td> ' . get_string('ponderacion','local_simulador') . '</td>
   </tr>
   <tr>
-    <td><input type="text" name="evaluacion"></td>
-    <td><input type="text" name="ponderacion"></td>
+    <td><input type="text" name="evaluacion" id=4></td>
+    <td><input type="text" name="ponderacion" id=5></td>
   </tr>
   <tr>
-    <td><input type="text" name="evaluacion2"></td> 
-    <td><input type="text" name="ponderacion2"></td>
+    <td><input type="text" name="evaluacion2"> id=6</td> 
+    <td><input type="text" name="ponderacion2"> id=8</td>
   </tr>
     		
 </table>
@@ -81,7 +80,7 @@ echo
 
 
  ' . get_string('grado','local_simulador') . '
-<select name="grado">
+<select name="grado" id=9>
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
@@ -95,13 +94,38 @@ echo
 </select>
 <br>
  ' . get_string("pdeseado","local_simulador") . ':
-<input type="text" name="pdeseado">
+<input type="text" name="pdeseado" id=10>
 
 <br><input type="submit" name="boton">
 
 </form>
 <br>';
 
+$action = optional_param('action', 'guardar', PARAM_ACTION);
+
+if($action == 'agregar'){
+	//'sesskey'=>sesskey() confirm_sesskey()
+	$cursoid= required_param('cursoid', PARAM_INT);
+	$sesskey = required_param('sesskey', PARAM_INT);
+	$nuevocurso = new curso(false, array('cursoid'=>$cursoid));
+
+	if($nuevocurso->is_cancelled()){
+		$action = 'guardar';
+	}else if($fromform = $nuevocurso->get_data()){
+
+		//agrega nuevo tipo de evaluación
+		$record = new stdClass();
+		$record->cursoid = $fromform->cursoid;
+		$record->evaluacion = $fromform->evaluacion;
+		$record->ponderacion = $fromform->ponderacion;
+		if(!$DB->update_record('evaluaciones', $record)){
+			print_error(var_dump($record));
+		}
+		$action = 'guardar';
+	}
+
+}
+	
 // Show the page footer
 echo $OUTPUT->footer();
 ?>

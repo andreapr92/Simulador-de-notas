@@ -25,6 +25,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
+
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -52,34 +53,50 @@ echo $OUTPUT->header();
 <?php
 
 //Se seleccionan cursos ingresados de la base de datos
-$sql1 = 'SELECT nombre 
+$sql1 = 'SELECT id, nombre
 		FROM mdl_cursos';
 $result = $DB->get_records_sql ( $sql1 );
 
 
 //Mostrar cada curso en una fila de la tabla
 
-echo '<table style="width:100%">';
-		
-foreach ($result as $curso)
+$i=0;
+echo '<table align="center">';
+foreach ($result as $llave1 => $dato1)
 {
-	echo '
+	foreach ($dato1 as $llave2 => $curso)
+	{
+
+		$nombre[$i][$llave2]=$curso;
+		
+		
+	}	
+	$i++;
+}
+
+for ($i=0; $i<=count($nombre)-1; $i++ )
+{
+		echo '
 	<tr>
 	<td>
-	' . $curso . '
+	' . $nombre[$i]["nombre"] . '
 	</td>
 	</tr>';
 }
-echo '</table>';
-		
+
+
+echo '</table>
+<center>		';
+
+
 
 //Redirigir a Inscripcion de cursos 
 echo'<br><a href="'.new moodle_url("/local/simulador/index.php").'" > Agregar curso </a><br>';
 
 //Redirigir a Visor de cursos
-echo'<a href="'.new moodle_url("/local/simulador/visor.php").'" > GUARDAR </a>';
+echo'<br><br><a href="'.new moodle_url("/local/simulador/visor.php").'" > GUARDAR </a>';
 
-
+echo "</center>";
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
