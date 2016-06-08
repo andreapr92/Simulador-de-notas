@@ -41,8 +41,61 @@ $PAGE->set_title('Inscripcion de notas');
 // Show the page header
 echo $OUTPUT->header();
 
-// Here goes the content
+// TABLA EVALUACIONES
 
+//Recuperar evaluaciones ingresadas
+$nevaluaciones = $_POST ["nevaluaciones"];
+$nombre = $_POST ["nombre"];
+
+for ($i=1; $i<= $nevaluaciones; $i++)
+{
+	${'evaluacion'.$i}= $_POST ["evaluacion$i"];
+	${'ponderacion'.$i}= $_POST ["ponderacion$i"];
+}
+
+
+
+//Llamar al id del curso ingresado
+$sql1 = 'SELECT id
+		FROM mdl_cursos WHERE nombre = ?';
+$params = array("$nombre");
+
+$result = $DB->get_records_sql ( $sql1,$params );
+
+foreach ( $result as $llave1 => $dato1 ) {
+	foreach ( $dato1 as $llave2 => $id ) {
+
+	}
+}
+
+//Ingresar evaluaciones
+
+//Se crea array vacío
+$recordevaluaciones = array();
+
+//Se ingresan los valores de cada evaluación a la base de datos
+for ($i=1; $i<= $nevaluaciones; $i++)
+{
+	${'recordevaluacion'.$i} = new stdClass ();
+	
+	${'recordevaluacion'.$i}->nombre = ${'evaluacion'.$i};
+	${'recordevaluacion'.$i}->ponderacion = ${'ponderacion'.$i};
+	${'recordevaluacion'.$i}->cursoid = $id;
+	
+	array_push($recordevaluaciones, ${'recordevaluacion'.$i});
+}
+
+
+$idevaluaciones = $DB->insert_record ( 'evaluaciones', $recordevaluaciones );
+
+//INGRESAR NOTAS A EVALUACIONES
+
+
+//Se seleccionan evaluaciones ingresadas de la base de datos
+$sql1 = 'SELECT id, nombre
+		FROM mdl_evaluaciones';
+$result = $DB->get_records_sql ( $sql1 );
+	
 ?>
 
 

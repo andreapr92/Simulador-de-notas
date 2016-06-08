@@ -86,7 +86,10 @@ for ($i=0; $i<=count($nombre)-1; $i++ )
 
 
 echo '</table>
-<center>		';
+<center><br>		';
+
+
+
 
 
 

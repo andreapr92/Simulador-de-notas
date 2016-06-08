@@ -42,41 +42,28 @@ $PAGE->set_title('Inscripcion de cursos');
 // Show the page header
 echo $OUTPUT->header();
 
-// Here goes the content
+// FORMULARIO CURSOS
 echo 
 '<center>' . get_string('tituloindex','local_simulador') . '</center>
 <br>
 
-<form action="insert_form.php" method="post">'
+
+<form action="evaluaciones.php" method="post">'
 
 
 . get_string('nombrecurso','local_simulador') .': <input type="text" name="curso" id=1>
  ' . get_string('duracioncurso','local_simulador') . '
+ 			
+ 		
 <select name="duracion" id=2>
   <option value="semestral"> ' . get_string('semestral','local_simulador') . '</option>
   <option value="anual"> ' . get_string('anual','local_simulador') . '</option>
 </select>
 
-
+ <br>
+Número evaluaciones : <input type="text" name="nevaluaciones" id=11>
+ 	
 <br>
-
-
-<table style="width:100%">
-  <tr>
-    <td> ' . get_string('evaluaciones','local_simulador') . '</td>
-    <td> ' . get_string('ponderacion','local_simulador') . '</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="evaluacion" id=4></td>
-    <td><input type="text" name="ponderacion" id=5></td>
-  </tr>
-  <tr>
-    <td><input type="text" name="evaluacion2"> id=6</td> 
-    <td><input type="text" name="ponderacion2"> id=8</td>
-  </tr>
-    		
-</table>
-
 
 
  ' . get_string('grado','local_simulador') . '
@@ -95,36 +82,12 @@ echo
 <br>
  ' . get_string("pdeseado","local_simulador") . ':
 <input type="text" name="pdeseado" id=10>
-
+ 		
 <br><input type="submit" name="boton">
 
 </form>
 <br>';
 
-$action = optional_param('action', 'guardar', PARAM_ACTION);
-
-if($action == 'agregar'){
-	//'sesskey'=>sesskey() confirm_sesskey()
-	$cursoid= required_param('cursoid', PARAM_INT);
-	$sesskey = required_param('sesskey', PARAM_INT);
-	$nuevocurso = new curso(false, array('cursoid'=>$cursoid));
-
-	if($nuevocurso->is_cancelled()){
-		$action = 'guardar';
-	}else if($fromform = $nuevocurso->get_data()){
-
-		//agrega nuevo tipo de evaluación
-		$record = new stdClass();
-		$record->cursoid = $fromform->cursoid;
-		$record->evaluacion = $fromform->evaluacion;
-		$record->ponderacion = $fromform->ponderacion;
-		if(!$DB->update_record('evaluaciones', $record)){
-			print_error(var_dump($record));
-		}
-		$action = 'guardar';
-	}
-
-}
 	
 // Show the page footer
 echo $OUTPUT->footer();
