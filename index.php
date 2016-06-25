@@ -61,7 +61,7 @@ echo
 </select>
 
  <br>
-Número evaluaciones : <input type="text" name="nevaluaciones" id=11>
+Número evaluaciones : <input type="number" name="nevaluaciones" min="1" id=11>
  	
 <br>
 
@@ -81,7 +81,7 @@ Número evaluaciones : <input type="text" name="nevaluaciones" id=11>
 </select>
 <br>
  ' . get_string("pdeseado","local_simulador") . ':
-<input type="text" name="pdeseado" id=10>
+<input type="number" name="pdeseado" min="1" max="7" step="0.1" id=10>
  		
 <br><input type="submit" name="boton">
 

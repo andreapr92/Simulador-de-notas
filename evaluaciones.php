@@ -11,9 +11,9 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador/index.php'));
+$PAGE->set_url(new moodle_url('/local/simulador/evaluaciones.php'));
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_title('Inscripcion de cursos');
+$PAGE->set_title('Evaluaciones');
 
 
 
@@ -51,6 +51,8 @@ $idcurso = $DB->insert_record ( 'cursos', $recordcursos );
 
 
 // INSERTAR EVALUACIONES
+
+
 echo '
 <form action="notas.php" method="post">
 
@@ -63,21 +65,22 @@ echo '
 
 for ($i=1; $i<= $nevaluaciones; $i++)
 {
+
 echo '
 		
 <tr>
-<td><input type="text" name="evaluacion$i"></td>
-<td><input type="text" name="ponderacion$i"></td>
+<td><input type="text" name="evaluacion'.$i.'"></td>
+<td><input type="text" name="ponderacion'.$i.'"></td>
 </tr>'
 ;
 }
 
 echo '
 </table> 
-<br><input type="hidden" name="nevaluaciones" value=' . $nevaluaciones . '>;
-<br><input type="hidden" name="nombre" value=' . $nombre . '>;
-<br><input type="submit" name="boton2"> ';
-
+<br><input type="hidden" name="nevaluaciones" value=' . $nevaluaciones . '>
+<br><input type="hidden" name="nombre" value=' . $nombre . '>
+<br><input type="submit" name="boton2"> 
+</form>';
 
 // Show the page footer
 echo $OUTPUT->footer();

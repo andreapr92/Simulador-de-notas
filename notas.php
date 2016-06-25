@@ -23,6 +23,7 @@
  */
 // Minimum for Moodle to work, the basic libraries
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+global $DB, $USER;
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -41,12 +42,18 @@ $PAGE->set_title('Inscripcion de notas');
 // Show the page header
 echo $OUTPUT->header();
 
-// TABLA EVALUACIONES
+
+
+
+
+// INGRESAR EVALUACIONES A BASE DE DATOS
+
+//Recuperar hidden
+$nevaluaciones = $_POST ["nevaluaciones"];
+$nombre1 = $_POST ["nombre"];
+
 
 //Recuperar evaluaciones ingresadas
-$nevaluaciones = $_POST ["nevaluaciones"];
-$nombre = $_POST ["nombre"];
-
 for ($i=1; $i<= $nevaluaciones; $i++)
 {
 	${'evaluacion'.$i}= $_POST ["evaluacion$i"];
@@ -54,11 +61,10 @@ for ($i=1; $i<= $nevaluaciones; $i++)
 }
 
 
-
 //Llamar al id del curso ingresado
 $sql1 = 'SELECT id
 		FROM mdl_cursos WHERE nombre = ?';
-$params = array("$nombre");
+$params = array("$nombre1");
 
 $result = $DB->get_records_sql ( $sql1,$params );
 
@@ -70,69 +76,103 @@ foreach ( $result as $llave1 => $dato1 ) {
 
 //Ingresar evaluaciones
 
-//Se crea array vacío
-$recordevaluaciones = array();
+echo'<center> Ingresa tus notas para cada evaluaciÃ³n </center><br>';
 
-//Se ingresan los valores de cada evaluación a la base de datos
+//Se ingresan los valores de cada evaluaciÃ³n a la base de datos
 for ($i=1; $i<= $nevaluaciones; $i++)
 {
 	${'recordevaluacion'.$i} = new stdClass ();
-	
+
 	${'recordevaluacion'.$i}->nombre = ${'evaluacion'.$i};
 	${'recordevaluacion'.$i}->ponderacion = ${'ponderacion'.$i};
 	${'recordevaluacion'.$i}->cursoid = $id;
-	
-	array_push($recordevaluaciones, ${'recordevaluacion'.$i});
+
+	${'idevaluaciones'.$i} = $DB->insert_record ( 'evaluaciones', ${'recordevaluacion'.$i} );
 }
 
 
-$idevaluaciones = $DB->insert_record ( 'evaluaciones', $recordevaluaciones );
+
+
+
+
+
+
 
 //INGRESAR NOTAS A EVALUACIONES
 
 
 //Se seleccionan evaluaciones ingresadas de la base de datos
-$sql1 = 'SELECT id, nombre
-		FROM mdl_evaluaciones';
-$result = $DB->get_records_sql ( $sql1 );
-	
-?>
+$sql2 = 'SELECT id, nombre
+		FROM mdl_evaluaciones WHERE cursoid = ?';
+$params2 = array("$id");
+$result2 = $DB->get_records_sql ( $sql2, $params2 );
 
 
-    <td>Notas</td> 
-  </tr>
-  <tr>
-    <td><select>
-  		<option value="Control">Control</option>
- 		<option value="Prueba">Prueba</option>
-		</select>
-	</td>
-    <td><input type="number" name="nota" min="1" max="7" step="0.1"></td> 
-  </tr>
-</table>
-<br>
-<button onclick="agregarEvaluacion()">Agregar evaluación</button>
+//Mostrar cada curso en una fila de la tabla
 
-<script>
-function agregarEvaluacion() {
-    var table = document.getElementById("inscripcionNotas");
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = <select>
-  		<option value="Control">Control</option>
- 		<option value="Prueba">Prueba</option>
-		</select>;
-    cell2.innerHTML = <input type="number" name="nota" min="1" max="7" step="0.1">;
+$j=0;
+echo '
+<form action="insert_notas.php" method="post">
+<table align="center">';
+
+		
+		
+foreach ($result2 as $llave3 => $dato2)
+{
+	foreach ($dato2 as $llave4 => $evaluacion)
+	{
+
+		$nombre[$j][$llave4]=$evaluacion;
+
+
+	}
+	$j++;
 }
-</script>
 
+echo '<tr>';
 
-<br><input type="submit" name="Guardar">
+for ($j=0; $j<=count($nombre)-1; $j++ )
+{
+	echo '
+	<td>
+	<center>
+	' . $nombre[$j]["nombre"] . '
+	</center>
+	</td>';
+}
+echo '</tr>
+	<tr>';
 
-</form>
+for ($l=0; $l<=count($nombre)-1; $l++ )
+{
+echo '<td>';
 
-<?php 
+echo '
+	<table align="center">';
+			// Por cada evaluaciÃ³n se ingresan notas en el formulario
+			for ($n=1; $n<= 5; $n++)
+			{
+			echo '
+			<tr>
+			<td> ' . $n .'. <input type="number" name="nota'.$n.'" min="1" max="7" step="0.1"></td>
+			</tr>
+			';}
+echo '</table>
+	</td>';
+}
+echo 
+	'</tr>
+	</table>
+	<br><br>
+	<center>
+	<input type="submit" name="boton3">
+	</center>
+	</form>';
+	
+	
+	
+	
+	
 
 // Show the page footer
 echo $OUTPUT->footer();
