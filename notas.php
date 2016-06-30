@@ -50,7 +50,7 @@ echo $OUTPUT->header();
 
 //Recuperar hidden
 $nevaluaciones = $_POST ["nevaluaciones"];
-$nombre1 = $_POST ["nombre"];
+$nombrecurso = $_POST ["nombre"];
 
 
 //Recuperar evaluaciones ingresadas
@@ -64,7 +64,7 @@ for ($i=1; $i<= $nevaluaciones; $i++)
 //Llamar al id del curso ingresado
 $sql1 = 'SELECT id
 		FROM mdl_cursos WHERE nombre = ?';
-$params = array("$nombre1");
+$params = array("$nombrecurso");
 
 $result = $DB->get_records_sql ( $sql1,$params );
 
@@ -112,7 +112,7 @@ $result2 = $DB->get_records_sql ( $sql2, $params2 );
 
 $j=0;
 echo '
-<form action="insert_notas.php" method="post">
+<form action="insert_curso.php" method="post">
 <table align="center">';
 
 		
@@ -143,7 +143,7 @@ for ($j=0; $j<=count($nombre)-1; $j++ )
 echo '</tr>
 	<tr>';
 
-for ($l=0; $l<=count($nombre)-1; $l++ )
+for ($l=1; $l<=count($nombre); $l++ )
 {
 echo '<td>';
 
@@ -154,7 +154,7 @@ echo '
 			{
 			echo '
 			<tr>
-			<td> ' . $n .'. <input type="number" name="nota'.$n.'" min="1" max="7" step="0.1"></td>
+			<td> ' . $n .'. <input type="number" name="nota'.$l.''.$n.'" min="1" max="7" step="0.1"></td>
 			</tr>
 			';}
 echo '</table>
@@ -165,6 +165,9 @@ echo
 	</table>
 	<br><br>
 	<center>
+<br><input type="hidden" name="nevaluaciones" value=' . $nevaluaciones . '>
+<br><input type="hidden" name="nombre" value=' . $nombrecurso . '>
+<br><input type="hidden" name="id" value=' . $id . '>
 	<input type="submit" name="boton3">
 	</center>
 	</form>';
