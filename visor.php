@@ -42,6 +42,11 @@ $PAGE->set_title('Cursos');
 // Show the page header
 echo $OUTPUT->header();
 
+echo '<table width=100%>
+	<tr bgcolor=#424242 >';
+echo '<td align="center" style="color:#FBEFF5"><h3>' . get_string('titulovisor','local_simulador') . '</h3></td>';
+echo '</tr></table><br>';
+
 // Here goes the content
 
 // Seleccionar nombres del curso
@@ -191,16 +196,20 @@ for ($e=1; $e<=$i-1; $e++ )
 	for ($n=1; $n<=${'contador'.$e}; $n++ )
 	{
 		${'promedio'.$e.$n}=0;
+		$contadornotas=0;
 	
 		for ($p=1; $p<=5; $p++)
 		{
 			
 			${'promedio'.$e.$n}= ${'promedio'.$e.$n} + ${'nota'.$e.$n.$p};
-			
+			if (${'nota'.$e.$n.$p} != "0")
+			{
+				$contadornotas++;
+			}
 		}
 		
 		//Promedio de cada evaluación
-		${'promedio'.$e.$n}= ${'promedio'.$e.$n}/5;
+		${'promedio'.$e.$n}= ${'promedio'.$e.$n}/$contadornotas;
 		
 		${'promedio'.$e}=${'promedio'.$e}+${'promedio'.$e.$n}*(${'ponderacion'.$e.$n}/100);
 	}
@@ -214,32 +223,22 @@ for ($e=1; $e<=$i-1; $e++ )
 
 
 
-// Mostrar cursos en la tabla
-
-echo "<table align='center'>
-			<tr>
-			<td>";
-
 for ($c=1; $c<=$i-1; $c++)
 {
-	echo "<center>";
+echo "<table align='center' width='25%' ><tr bgcolor=#424242 ><td align='center'>";
 	
-echo'<br><a href="'.new moodle_url("/local/simulador/metas.php?idcurso=${'id'.$c}&promediocurso=${'promedio'.$c}").'" > '.${'curso'.$c}.' </a><br>';
-	echo "${'promedio'.$c}
-		<br>";
-	echo "</center>";
-	echo "</td>";
-	
-	if ($c%2==0)
-	{
-		echo "</tr>
-			<tr>";
-	}
-	echo "<td>";
+	echo '<font color="white">';
+	echo'<a href="'.new moodle_url("/local/simulador/metas.php?idcurso=${'id'.$c}&promediocurso=${'promedio'.$c}").'" style="color:#FFFFFF" > '.${'curso'.$c}.' </a>';
+	echo "</font></td></tr>";
+	echo "<tr bgcolor=#01A9DB><td align='center'>";
+	echo '<font color="white">';
+	echo "${'promedio'.$c}";
+	echo"</font></td></tr>";
+	echo "</table><br>";
 }
 
 
-echo "</table>";
+
 
 
 

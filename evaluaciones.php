@@ -74,7 +74,7 @@ for ($i=1; $i<= $nevaluaciones; $i++)
 echo '
 		
 <tr>
-<td><input type="text" name="evaluacion'.$i.'"> = </td>
+<td>'.$i.'. <input type="text" name="evaluacion'.$i.'"> = </td>
 <td><input type="text" name="ponderacion'.$i.'"> % </td>
 </tr>'
 ;

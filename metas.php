@@ -36,7 +36,7 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador/prueba2.php'));
+$PAGE->set_url(new moodle_url('/local/simulador/visor.php'));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_title('Metas');
 
@@ -156,16 +156,21 @@ for ($k=1; $k<=$i-1; $k++)
 for ($e=1; $e<=$i-1; $e++ )
 	{
 		${'promedio'.$e}=0;
+		$contadornotas=0;
 
 		for ($p=1; $p<=5; $p++)
 		{
 				
 			${'promedio'.$e}= ${'promedio'.$e} + ${'nota'.$e.$p};
+			if (${'nota'.$e.$p} != "0")
+			{
+				$contadornotas++;
+			}
 				
 		}
 
 		//Promedio de cada evaluación
-		${'promedio'.$e}= ${'promedio'.$e}/5;
+		${'promedio'.$e}= ${'promedio'.$e}/$contadornotas;
 
 	}
 
@@ -207,27 +212,39 @@ foreach ( $result6 as $llave11 => $dato6 ) {
 
 
 // Se muestra el informe de notas
+echo '<table width=100%>
+	<tr bgcolor=#424242 >';
+echo '<td align="center" style="color:#FBEFF5"><h3>'. $curso .'</h3></td>';
+echo '<td></td>';
+echo '</tr></table>';
 
-echo "<center>";
-echo "$curso";
-echo "</center><br>";
 
 
-echo "<table><tr><td>";
+echo '<table width="100%" ><tr><td>';
 
 for ($a=1; $a<=$i-1; $a++)
 {
-	echo "${'evaluacion'.$a}";
+	echo "<center><h4>${'evaluacion'.$a}</h4></center>";
 	
 	for ($n=1; $n<=5; $n++)
 	{
 		echo "</td>";
 		echo "<td>";
+		if (${'nota'.$a.$n} == "0")
+		{
+			echo "-";
+		}
+		else 
+		{
 		echo "${'nota'.$a.$n}";
+		}
 	}
-	echo"</td><td>";
-	echo "${'promedio'.$a}";
-		
+	echo'</td><td align="center">';
+	$promedioredondeado = round(${'promedio'.$a}, 1);
+	echo '<i>'.get_string("PF","local_simulador").'</i>';
+	echo " ";
+	echo  "<b>$promedioredondeado</b>";
+	
 	echo "</td></tr>";
 	echo "<tr><td>";
 }
@@ -237,25 +254,64 @@ echo "</td></tr></table>";
 $diferencia = ($pdeseado - $promediocurso)*10;
 $diferenciaabsoluta = abs ($diferencia);
 
-echo "Promedio del curso: $promediocurso <br>";
-echo "Promedio deseado del curso: $pdeseado <br><br>";
 
+echo '<table width="100%"><tr bgcolor=#01A9DB><td>';
+echo '<h5><font color="white">';
+echo '<div align="center"> '.get_string("promedio_curso","local_simulador").'</div>';
+echo '</font></h5>';
+echo "</td><td>";
+echo '<h5><font color="white">';
+echo  $promediocurso;
+echo '</font></h5>';
+echo "</td></tr>";
+echo "<tr bgcolor=#0040FF ><td>";
+echo '<h5><font color="white">';
+echo '<div align="center"> '.get_string("promedio_deseado","local_simulador").'</div>';
+echo '</font></h5>';
+echo "</td><td>";
+echo '<h5><font color="white">';
+echo  $pdeseado;
+echo '</font></h5>';
+echo "</td></tr></table>";
+echo "<br><br>";
+
+
+// Mensaje sobre la diferencia
 
 if ($diferencia > 1)
 {
-	echo "Faltan $diferenciaabsoluta décimas para llegar al Promedio Deseado<br>";
+	echo '<div align="center">';
+	echo get_string("faltan","local_simulador");
+	echo  '<b>'.$diferenciaabsoluta.'</b> ' ; 
+	echo get_string("decimas_menos","local_simulador");// décimas para llegar al Promedio Deseado<br>"
+    echo "<br>";
+    echo '</div>';
 }
 elseif ($diferencia < 1)
 {
-	echo "¡¡Has pasado por $diferenciaabsoluta décimas el Promedio Deseado!!<br>
-	¡¡Felicitaciones!!<br>";
+	echo '<div align="center">';
+	echo get_string("pasado","local_simulador");
+	echo  '<b>'.$diferenciaabsoluta.'</b> ';
+	echo ''.get_string("decimas_mas","local_simulador").'';// décimas para llegar al Promedio Deseado<br>"
+	echo "<br>";
+	echo '</div>';
 }
 else 
 {
-	echo "Tienes tu promedio deseado, ¡¡Sigue así!!<br>";
+	echo '<div align="center">';
+	echo get_string("promedio_justo","local_simulador");
+	echo '</div>';
 }
 
-echo "Recomendaciones:<br>";
+
+// RECOMENDACIONES
+
+echo '<div align="center">';
+echo "<h5><u>";
+echo get_string("recomendaciones","local_simulador");
+echo "</u></h5><br>";
+echo '</div>';
+
 
 // Encontrar evaluación débil
 
@@ -269,8 +325,12 @@ $evaluaciondebil = min ($arrayevaluaciones);
 
 $posicion = array_search("$evaluaciondebil",$arrayevaluaciones)+1;
 
-
-echo "Tu evaluación más débil es ${'evaluacion'.$posicion}, deberías reforzarla<br>";
+// Recomendación 1
+echo '<div align="center"><li>';
+echo get_string("evaluacion_debil","local_simulador");
+echo '<b> '.${'evaluacion'.$posicion}.' </b>';
+echo get_string("evaluacion_debil_consejo","local_simulador");
+echo '</li></div><br>';
 
 
 
@@ -284,12 +344,17 @@ for ($e=1; $e<=$i-1; $e++)
 $ponderacionmasalta = max($arrayponderaciones);
 $posicionealta = array_search("$ponderacionmasalta",$arrayponderaciones)+1;
 
-echo "Tu evaluación que pondera más es ${'evaluacion'.$posicionealta}, deberías enfocarte más en ésta";
 
+// Recomendación 2
+echo '<div align="center"><li>';
+echo get_string("evaluacion_mayor_ponderacion","local_simulador");
+echo '<b>'.${'evaluacion'.$posicionealta}.'</b>';
+echo get_string("evaluacion_mayor_ponderacion_consejo","local_simulador");
+echo '</li></div>';
 
 //Redirigir a Visor de cursos
-echo'<br><br><center><a href="'.new moodle_url("/local/simulador/visor.php").'" class="inicio" >VOLVER</a><hr></center>';
-$ola;
+echo'<br><br><center><a href="'.new moodle_url("/local/simulador/visor.php").'" class="inicio" >'.get_string("volver","local_simulador").'</a><hr></center>';
+
 
 // Show the page footer
 echo $OUTPUT->footer();
