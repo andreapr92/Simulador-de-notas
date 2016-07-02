@@ -24,6 +24,8 @@
 // Minimum for Moodle to work, the basic libraries
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
+global $DB, $USER;
+
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -33,16 +35,21 @@ $PAGE->set_context($context);
 require_login();
 
 // Page navigation and URL settings.
-$PAGE->set_url(new moodle_url('/local/simulador/visor.php'));
+$PAGE->set_url(new moodle_url('/local/simulador/prueba2.php'));
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_title('Cursos');
-
+$PAGE->set_title('Inicio');
 
 
 // Show the page header
 echo $OUTPUT->header();
 
 // Here goes the content
+
+
+//Recuperar id del curso seleccionado
+$a=$_GET['idcurso'];
+echo "$a";
+
 
 // Seleccionar nombres del curso
 
@@ -112,18 +119,18 @@ for ($r=1; $r<=$i-1; $r++ )
 	{
 
 
-	$sql6 = 'SELECT ponderacion
+		$sql6 = 'SELECT ponderacion
 		FROM mdl_evaluaciones WHERE id = ?';
-	$params6 = array("${'id'.$r.$q}");
-	$result6 = $DB->get_records_sql ( $sql6, $params6 );
+		$params6 = array("${'id'.$r.$q}");
+		$result6 = $DB->get_records_sql ( $sql6, $params6 );
 
-	foreach ( $result6 as $llave11 => $dato6 ) {
-		foreach ( $dato6 as $llave12 => $ponderaciones ) {
+		foreach ( $result6 as $llave11 => $dato6 ) {
+			foreach ( $dato6 as $llave12 => $ponderaciones ) {
 
-			${'ponderacion'.$r.$q}= $ponderaciones;
+				${'ponderacion'.$r.$q}= $ponderaciones;
 
+			}
 		}
-	}
 }
 }
 
@@ -191,59 +198,30 @@ for ($e=1; $e<=$i-1; $e++ )
 	for ($n=1; $n<=${'contador'.$e}; $n++ )
 	{
 		${'promedio'.$e.$n}=0;
-	
+
 		for ($p=1; $p<=5; $p++)
 		{
-			
+				
 			${'promedio'.$e.$n}= ${'promedio'.$e.$n} + ${'nota'.$e.$n.$p};
-			
+				
 		}
-		
+
 		//Promedio de cada evaluación
 		${'promedio'.$e.$n}= ${'promedio'.$e.$n}/5;
-		
+
 		${'promedio'.$e}=${'promedio'.$e}+${'promedio'.$e.$n};
 	}
-	
+
 	//Promedio de cada curso
 	${'promedio'.$e} = round(${'promedio'.$e}/${'contador'.$e} , 1);
-	
+
 }
 
 
 
-
-
-// Mostrar cursos en la tabla
-
-echo "<table align='center'>
-			<tr>
-			<td>";
-
-for ($c=1; $c<=$i-1; $c++)
-{
-	echo "<center>";
-	
-echo'<br><a href="'.new moodle_url("/local/simulador/metas.php?idcurso=${'id'.$c}").'" > '.${'curso'.$c}.' </a><br>';
-	echo "${'promedio'.$c}
-		<br>";
-	echo "</center>";
-	echo "</td>";
-	
-	if ($c%2==0)
-	{
-		echo "</tr>
-			<tr>";
-	}
-	echo "<td>";
-}
-
-
-echo "</table>";
 
 
 
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
-
