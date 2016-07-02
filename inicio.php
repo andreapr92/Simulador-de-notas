@@ -24,7 +24,7 @@
 // Minimum for Moodle to work, the basic libraries
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
-
+include('style.css');
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -45,12 +45,11 @@ echo $OUTPUT->header();
 
 // Here goes the content
 
-?>
-
-<center>Cursos</center>
-<br>
-
-<?php
+echo '<table width=100%>
+	<tr bgcolor=#424242 >';
+echo '<td align="center" style="color:#FBEFF5"><h3>' . get_string('cursos','local_simulador') . '</h3></td>';
+echo '<td></td>';
+echo '</tr></table><br>';
 
 //Se seleccionan cursos ingresados de la base de datos
 $sql1 = 'SELECT id, nombre
@@ -61,7 +60,7 @@ $result = $DB->get_records_sql ( $sql1 );
 //Mostrar cada curso en una fila de la tabla
 
 $i=0;
-echo '<table align="center">';
+
 foreach ($result as $llave1 => $dato1)
 {
 	foreach ($dato1 as $llave2 => $curso)
@@ -76,17 +75,13 @@ foreach ($result as $llave1 => $dato1)
 
 for ($i=0; $i<=count($nombre)-1; $i++ )
 {
-		echo '
-	<tr>
-	<td>
-	' . $nombre[$i]["nombre"] . '
-	</td>
-	</tr>';
+	echo '<center>';
+		echo  $nombre[$i]["nombre"] ;
+		echo '</center></p><hr>';
 }
 
 
-echo '</table>
-<center><br>		';
+echo '<center>';
 
 
 
@@ -94,14 +89,15 @@ echo '</table>
 
 
 //Redirigir a Inscripcion de cursos 
-echo'<br><a href="'.new moodle_url("/local/simulador/index.php").'" > Agregar curso </a><br>';
+echo'<a href="'.new moodle_url("/local/simulador/index.php").'" class="inicio">'.get_string("agregar","local_simulador").'</a><hr>';
 
 //Redirigir a Visor de cursos
-echo'<br><br><a href="'.new moodle_url("/local/simulador/visor.php").'" > GUARDAR </a>';
+echo'<a href="'.new moodle_url("/local/simulador/visor.php").'" class="inicio" >'.get_string("guardar","local_simulador").'</a><hr>';
 
 echo "</center>";
 // Show the page footer
 echo $OUTPUT->footer();
 ?>
+
 
 

@@ -25,6 +25,8 @@
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
 global $DB, $USER;
+include('style.css');
+
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
 $context = context_system::instance();
@@ -57,7 +59,16 @@ for ($i=1; $i<= $nevaluaciones; $i++)
 {
 	for ($n=1; $n<= 5; $n++)
 	{
+		//condicion nulo
+		if ($_POST ["nota$i$n"] == null)
+		{
+			${'nota'.$i.$n}="0";
+		}
+		else
+		{
 	${'nota'.$i.$n}= $_POST ["nota$i$n"];
+		}
+		//
 	}
 }
 
@@ -98,12 +109,12 @@ for ($m=1; $m<=$nevaluaciones; $m++)
 	}
 }
 echo "<center>";
-echo " Se ha ingresado exitosamente su curso ";
+echo get_string("registro_exitoso",'local_simulador');
 echo "<br><br>";
 
 
 //Redirigir a Inicio de cursos
-echo'<br><br><a href="'.new moodle_url("/local/simulador/inicio.php").'" > SEGUIR </a>';
+echo'<br><br><a href="'.new moodle_url("/local/simulador/inicio.php").'" class="inicio" >'.get_string("siguiente","local_simulador").' </a>';
 
 echo "</center>";
 

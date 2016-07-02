@@ -25,6 +25,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once($CFG->libdir.'/adminlib.php');
 global $DB, $USER;
+include('style.css');
 
 
 // Moodle pages require a context, that can be system, course or module (activity or resource)
@@ -234,6 +235,7 @@ for ($a=1; $a<=$i-1; $a++)
 echo "</td></tr></table>";
 
 $diferencia = ($pdeseado - $promediocurso)*10;
+$diferenciaabsoluta = abs ($diferencia);
 
 echo "Promedio del curso: $promediocurso <br>";
 echo "Promedio deseado del curso: $pdeseado <br><br>";
@@ -241,12 +243,12 @@ echo "Promedio deseado del curso: $pdeseado <br><br>";
 
 if ($diferencia > 1)
 {
-	echo "Faltan $diferencia décimas para llegar al Promedio Deseado<br>";
+	echo "Faltan $diferenciaabsoluta décimas para llegar al Promedio Deseado<br>";
 }
 elseif ($diferencia < 1)
 {
-	echo "¡¡Has pasado por $diferencia décimas el Promedio Deseado!!<br>
-	¡¡Felicitaciones!!";
+	echo "¡¡Has pasado por $diferenciaabsoluta décimas el Promedio Deseado!!<br>
+	¡¡Felicitaciones!!<br>";
 }
 else 
 {
@@ -283,6 +285,11 @@ $ponderacionmasalta = max($arrayponderaciones);
 $posicionealta = array_search("$ponderacionmasalta",$arrayponderaciones)+1;
 
 echo "Tu evaluación que pondera más es ${'evaluacion'.$posicionealta}, deberías enfocarte más en ésta";
+
+
+//Redirigir a Visor de cursos
+echo'<br><br><center><a href="'.new moodle_url("/local/simulador/visor.php").'" class="inicio" >VOLVER</a><hr></center>';
+$ola;
 
 // Show the page footer
 echo $OUTPUT->footer();

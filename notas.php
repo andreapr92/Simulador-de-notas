@@ -42,6 +42,11 @@ $PAGE->set_title('Inscripcion de notas');
 // Show the page header
 echo $OUTPUT->header();
 
+echo '<table width=100%>
+	<tr bgcolor=#424242 >';
+echo '<td align="center" style="color:#FBEFF5"><h3>' . get_string('notas_titulo','local_simulador') . '</h3></td>';
+echo '<td></td>';
+echo '</tr></table><br>';
 
 
 
@@ -75,10 +80,7 @@ foreach ( $result as $llave1 => $dato1 ) {
 }
 
 //Ingresar evaluaciones
-
-echo'<center> Ingresa tus notas para cada evaluación </center><br>';
-
-//Se ingresan los valores de cada evaluación a la base de datos
+//Se ingresan los valores de cada evaluaciÃ³n a la base de datos
 for ($i=1; $i<= $nevaluaciones; $i++)
 {
 	${'recordevaluacion'.$i} = new stdClass ();
