@@ -62,7 +62,7 @@ echo '
   <option value="anual"> ' . get_string('anual','local_simulador') . '</option>
 </select>
 </td></tr>
-<tr><td><h6> ' . get_string('numero_evaluaciones','local_simulador') . ' :</h6></td> <td> <input type="number" name="nevaluaciones" min="1" id=11></td></tr>
+<tr><td><h6> ' . get_string('numero_evaluaciones','local_simulador') . ' :</h6><br><br></td> <td> <input type="number" name="nevaluaciones" min="1" id=11><br><i>' . get_string('ejemplonevaluaciones','local_simulador') . '</i><br></td></tr>
 
 <tr><td><h6> ' . get_string('grado','local_simulador') . ':</h6></td> <td>
 <select name="grado" id=9>

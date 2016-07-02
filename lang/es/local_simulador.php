@@ -22,7 +22,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // PLUGIN MINIMUM STRINGS.
-$string ['pluginname'] = 'TICS331 ejemplo';
+$string ['pluginname'] = 'Simulador de notas';
 
 //TABLA CURSOS
 $string ['tituloindex'] = 'Inscripción de Curso';
@@ -57,3 +57,6 @@ $string['evaluacion_mayor_ponderacion']="Tu evaluación que pondera más es ";
 $string['evaluacion_mayor_ponderacion_consejo']=", deberías enfocarte más en ésta";
 $string['volver']="VOLVER";
 $string["titulovisor"]="Cursos";
+$string["ejemplonevaluaciones"]="ej. Si tienes Pruebas, Controles, Tareas = 3";
+$string["instruccionponderaciones"]="Las ponderaciones deben sumar 100";
+$string["instruccionnotas"]="Ingresa aquí las notas que has tenido hasta ahora. No es necesario que llenes todos los espacios si no has tenido tantas evaluaciones hasta ahora. ";

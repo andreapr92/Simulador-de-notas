@@ -46,7 +46,7 @@ echo '<table width=100%>
 	<tr bgcolor=#424242 >';
 echo '<td align="center" style="color:#FBEFF5"><h3>' . get_string('notas_titulo','local_simulador') . '</h3></td>';
 echo '<td></td>';
-echo '</tr></table><br>';
+echo '</tr>		<tr bgcolor=#0080FF><td align="center" style="color:#FBEFF5">'.get_string("instruccionnotas","local_simulador").'</td></tr></table><br>';
 
 
 

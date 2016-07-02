@@ -35,7 +35,7 @@ echo '<table width=100%>
 	<tr bgcolor=#424242 >';
 echo '<td align="center" style="color:#FBEFF5"><h3>'. $nombre .'</h3></td>';
 echo '<td></td>';
-echo '</tr></table><br>';
+echo '</tr>		<tr bgcolor=#0080FF><td align="center" style="color:#FBEFF5">'.get_string("instruccionponderaciones","local_simulador").'</td></tr></table><br>';
 
 //echo $duracion;
 //echo $grado;

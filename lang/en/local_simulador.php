@@ -22,7 +22,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // PLUGIN MINIMUM STRINGS.
-$string ['pluginname'] = 'TICS331 example';
+$string ['pluginname'] = 'Grades simulator';
 //Course Table
 $string ['tituloindex'] = 'Course Inscription ';
 $string ['nombrecurso']='Course Name';
@@ -44,7 +44,7 @@ $string['PF']="Average:";
 $string['promedio_curso']="Course's Average:";
 $string['promedio_deseado']="Expected Average:";
 $string['faltan']="There are missing ";
-$string['decimas_menos']="tenths to rich the Expected Average<br>";
+$string['decimas_menos']="tenths to reach the Expected Average<br>";
 $string['pasado']="You have passed by ";
 $string['decimas_mas']="tenths the Expected Average!!<br>
 	Congratulations!!<br>";
@@ -56,3 +56,6 @@ $string['evaluacion_mayor_ponderacion']="Your evaluation that weigh the most is 
 $string['evaluacion_mayor_ponderacion_consejo']=", you should focus more in that one";
 $string['volver']="BACK";
 $string["titulovisor"]="Courses";
+$string["ejemplonevaluaciones"]="eg. If you have Tests, Quizzes, Homeworks = 3";
+$string["instruccionponderaciones"]="The ponderations must sum 100";
+$string["instruccionnotas"]="Add here the grades you’ve gotten until now. It is not necessary to fill all the spaces if you haven’t had that many evaluations until now. ";

@@ -328,7 +328,7 @@ $posicion = array_search("$evaluaciondebil",$arrayevaluaciones)+1;
 // Recomendación 1
 echo '<div align="center"><li>';
 echo get_string("evaluacion_debil","local_simulador");
-echo '<b> '.${'evaluacion'.$posicion}.' </b>';
+echo '<b> '.${'evaluacion'.$posicion}.'</b>';
 echo get_string("evaluacion_debil_consejo","local_simulador");
 echo '</li></div><br>';
 
