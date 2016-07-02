@@ -202,11 +202,11 @@ for ($e=1; $e<=$i-1; $e++ )
 		//Promedio de cada evaluación
 		${'promedio'.$e.$n}= ${'promedio'.$e.$n}/5;
 		
-		${'promedio'.$e}=${'promedio'.$e}+${'promedio'.$e.$n};
+		${'promedio'.$e}=${'promedio'.$e}+${'promedio'.$e.$n}*(${'ponderacion'.$e.$n}/100);
 	}
 	
 	//Promedio de cada curso
-	${'promedio'.$e} = round(${'promedio'.$e}/${'contador'.$e} , 1);
+	${'promedio'.$e} = round(${'promedio'.$e}, 1);
 	
 }
 
@@ -224,7 +224,7 @@ for ($c=1; $c<=$i-1; $c++)
 {
 	echo "<center>";
 	
-echo'<br><a href="'.new moodle_url("/local/simulador/metas.php?idcurso=${'id'.$c}").'" > '.${'curso'.$c}.' </a><br>';
+echo'<br><a href="'.new moodle_url("/local/simulador/metas.php?idcurso=${'id'.$c}&promediocurso=${'promedio'.$c}").'" > '.${'curso'.$c}.' </a><br>';
 	echo "${'promedio'.$c}
 		<br>";
 	echo "</center>";

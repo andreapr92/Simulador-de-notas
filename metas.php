@@ -37,7 +37,7 @@ require_login();
 // Page navigation and URL settings.
 $PAGE->set_url(new moodle_url('/local/simulador/prueba2.php'));
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_title('Inicio');
+$PAGE->set_title('Metas');
 
 
 // Show the page header
@@ -47,180 +47,242 @@ echo $OUTPUT->header();
 
 
 //Recuperar id del curso seleccionado
-$a=$_GET['idcurso'];
-echo "$a";
+$idcurso=$_GET['idcurso'];
+$promediocurso=$_GET['promediocurso'];
 
 
-// Seleccionar nombres del curso
+
+
+// Seleccionar nombre del curso
 
 $sql1 = 'SELECT nombre
-		FROM mdl_cursos';
-$result1 = $DB->get_records_sql ( $sql1 );
+		FROM mdl_cursos WHERE id = ?';
+$params1 = array("$idcurso");
+$result1 = $DB->get_records_sql ( $sql1, $params1 );
 
-$i=1;
 
 foreach ( $result1 as $llave1 => $dato1 ) {
 	foreach ( $dato1 as $llave2 => $curso ) {
 
-		${'curso'.$i}=$curso;
-		$i++;
+	}
+}
+
+// Seleccionar nombre de las evaluaciones del curso
+
+$sql2 = 'SELECT nombre
+		FROM mdl_evaluaciones WHERE cursoid = ?';
+$params2 = array("$idcurso");
+$result2 = $DB->get_records_sql ( $sql2, $params2 );
+
+$i=1;
+
+foreach ( $result2 as $llave3 => $dato2 ) {
+	foreach ( $dato2 as $llave4 => $evaluaciones ) {
+	
+	${'evaluacion'.$i} = $evaluaciones;
+	$i++;
 
 	}
 }
 
+// Seleccionar id de las evaluaciones del curso
 
-// Seleccionar id de cada curso
-
-$sql2 = 'SELECT id
-		FROM mdl_cursos';
-$result2 = $DB->get_records_sql ( $sql2 );
+$sql3 = 'SELECT id
+		FROM mdl_evaluaciones WHERE cursoid = ?';
+$params3 = array("$idcurso");
+$result3 = $DB->get_records_sql ( $sql3, $params3 );
 
 $j=1;
 
-foreach ( $result2 as $llave3 => $dato2 ) {
-	foreach ( $dato2 as $llave4 => $id ) {
+foreach ( $result3 as $llave5 => $dato3 ) {
+	foreach ( $dato3 as $llave6 => $idevaluaciones ) {
 
-		${'id'.$j}=$id;
+		${'idevaluacion'.$j} = $idevaluaciones;
 		$j++;
 
 	}
 }
 
 
-//Se seleccionan id de evaluaciones de cada curso
+// Seleccionar id de notas cada evaluacion del curso
 
 
-for ($a=1; $a<=$i-1; $a++ )
+for ($k=1; $k<=$i-1; $k++)
 {
-	${'contador'.$a}=0; // contador de evaluaciones de cada curso
-	$k=1;
-
-	$sql3 = 'SELECT id
-		FROM mdl_evaluaciones WHERE cursoid = ?';
-	$params3 = array("${'id'.$a}");
-	$result3 = $DB->get_records_sql ( $sql3, $params3 );
-
-	foreach ( $result3 as $llave5 => $dato3 ) {
-		foreach ( $dato3 as $llave6 => $idevaluaciones ) {
-
-			${'id'.$a.$k}= $idevaluaciones;
-			$k++;
-			${'contador'.$a}++;
-		}
-	}
-}
-
-// Se selecciona ponderaci�n de cada evaluaci�n de cada curso
-
-
-for ($r=1; $r<=$i-1; $r++ )
-{
-	for ($q=1; $q<= ${'contador'.$r}; $q++)
-	{
-
-
-		$sql6 = 'SELECT ponderacion
-		FROM mdl_evaluaciones WHERE id = ?';
-		$params6 = array("${'id'.$r.$q}");
-		$result6 = $DB->get_records_sql ( $sql6, $params6 );
-
-		foreach ( $result6 as $llave11 => $dato6 ) {
-			foreach ( $dato6 as $llave12 => $ponderaciones ) {
-
-				${'ponderacion'.$r.$q}= $ponderaciones;
-
-			}
-		}
-}
-}
-
-
-
-// Se seleccionan id de notas de cada evaluacion de cada curso
-
-
-for ($d=1; $d<=$i-1; $d++ )
-{
-
-	for ($m=1; $m<=${'contador'.$d}; $m++ )
-	{
-		$l=1;
-
-		$sql4 = 'SELECT id
+	
+$sql4 = 'SELECT id
 		FROM mdl_notas WHERE evaluacionesid = ?';
-		$params4 = array("${'id'.$d.$m}");
-		$result4 = $DB->get_records_sql ( $sql4, $params4 );
+$params4 = array("${'idevaluacion'.$k}");
+$result4 = $DB->get_records_sql ( $sql4, $params4 );
 
-		foreach ( $result4 as $llave7 => $dato4 ) {
-			foreach ( $dato4 as $llave8 => $idnotas ) {
+$l=1;
+foreach ( $result4 as $llave7 => $dato4 ) {
+	foreach ( $dato4 as $llave8 => $idnotas ) {
 
-				${'id'.$d.$m.$l}=$idnotas;
-				$l++;
+		${'id'.$k.$l} = $idnotas;
+		$l++;
 
-			}
-		}
+	}
 }
 }
 
-// Se seleccionan notas de cada evaluacion de cada curso
 
-for ($e=1; $e<=$i-1; $e++ )
+// Seleccionar notas de cada evaluacion
+
+for ($k=1; $k<=$i-1; $k++)
 {
-
-	for ($n=1; $n<=${'contador'.$e}; $n++ )
+	for ($l=1; $l<=5; $l++)
 	{
-		for ($p=1; $p<=5; $p++)
-		{
 
-			$sql5 = 'SELECT nota
+	$sql5 = 'SELECT nota
 		FROM mdl_notas WHERE id = ?';
-			$params5 = array("${'id'.$e.$n.$p}");
-			$result5 = $DB->get_records_sql ( $sql5, $params5 );
+	$params5 = array("${'id'.$k.$l}");
+	$result5 = $DB->get_records_sql ( $sql5, $params5 );
 
-			foreach ( $result5 as $llave9 => $dato5 ) {
-				foreach ( $dato5 as $llave10 => $notas ) {
+	foreach ( $result5 as $llave9 => $dato5 ) {
+		foreach ( $dato5 as $llave10 => $notasevaluacion ) {
 
-					${'nota'.$e.$n.$p}=$notas;
+			${'nota'.$k.$l} = $notasevaluacion;
 
-				}
-			}
 	}
 }
 }
+}
 
+// Promedio de cada evaluación
 
-// C�LCULO DE PROMEDIO POR CURSO
 
 for ($e=1; $e<=$i-1; $e++ )
-{
-	${'promedio'.$e}=0;
-
-	for ($n=1; $n<=${'contador'.$e}; $n++ )
 	{
-		${'promedio'.$e.$n}=0;
+		${'promedio'.$e}=0;
 
 		for ($p=1; $p<=5; $p++)
 		{
 				
-			${'promedio'.$e.$n}= ${'promedio'.$e.$n} + ${'nota'.$e.$n.$p};
+			${'promedio'.$e}= ${'promedio'.$e} + ${'nota'.$e.$p};
 				
 		}
 
-		//Promedio de cada evaluaci�n
-		${'promedio'.$e.$n}= ${'promedio'.$e.$n}/5;
+		//Promedio de cada evaluación
+		${'promedio'.$e}= ${'promedio'.$e}/5;
 
-		${'promedio'.$e}=${'promedio'.$e}+${'promedio'.$e.$n};
 	}
 
-	//Promedio de cada curso
-	${'promedio'.$e} = round(${'promedio'.$e}/${'contador'.$e} , 1);
+//Seleccionar promedio deseado del curso
 
+$sql5 = 'SELECT pdeseado
+	FROM mdl_cursos WHERE id = ?';
+$params5 = array("$idcurso");
+$result5 = $DB->get_records_sql ( $sql5, $params5 );
+
+
+foreach ( $result5 as $llave9 => $dato5 ) {
+	foreach ( $dato5 as $llave10 => $pdeseado ) {
+
+	}
+}
+	
+
+// Seleccionar ponderacion de las evaluaciones del curso
+
+for ($t=1; $t<=$i-1; $t++)
+{
+$sql6 = 'SELECT ponderacion
+		FROM mdl_evaluaciones WHERE id = ?';
+$params6 = array("${'idevaluacion'.$t}");
+$result6 = $DB->get_records_sql ( $sql6, $params6 );
+
+
+
+foreach ( $result6 as $llave11 => $dato6 ) {
+	foreach ( $dato6 as $llave12 => $ponderaciones ) {
+
+		${'ponderacion'.$t} = $ponderaciones;
+
+	}
+}
 }
 
 
 
+// Se muestra el informe de notas
+
+echo "<center>";
+echo "$curso";
+echo "</center><br>";
 
 
+echo "<table><tr><td>";
+
+for ($a=1; $a<=$i-1; $a++)
+{
+	echo "${'evaluacion'.$a}";
+	
+	for ($n=1; $n<=5; $n++)
+	{
+		echo "</td>";
+		echo "<td>";
+		echo "${'nota'.$a.$n}";
+	}
+	echo"</td><td>";
+	echo "${'promedio'.$a}";
+		
+	echo "</td></tr>";
+	echo "<tr><td>";
+}
+
+echo "</td></tr></table>";
+
+$diferencia = ($pdeseado - $promediocurso)*10;
+
+echo "Promedio del curso: $promediocurso <br>";
+echo "Promedio deseado del curso: $pdeseado <br><br>";
+
+
+if ($diferencia > 1)
+{
+	echo "Faltan $diferencia décimas para llegar al Promedio Deseado<br>";
+}
+elseif ($diferencia < 1)
+{
+	echo "¡¡Has pasado por $diferencia décimas el Promedio Deseado!!<br>
+	¡¡Felicitaciones!!";
+}
+else 
+{
+	echo "Tienes tu promedio deseado, ¡¡Sigue así!!<br>";
+}
+
+echo "Recomendaciones:<br>";
+
+// Encontrar evaluación débil
+
+$arrayevaluaciones = array();
+for ($e=1; $e<=$i-1; $e++)
+{
+	$ponderacioncurso = ${'promedio'.$e}*${'ponderacion'.$e}/100;
+	array_push($arrayevaluaciones, "$ponderacioncurso");
+}
+$evaluaciondebil = min ($arrayevaluaciones);
+
+$posicion = array_search("$evaluaciondebil",$arrayevaluaciones)+1;
+
+
+echo "Tu evaluación más débil es ${'evaluacion'.$posicion}, deberías reforzarla<br>";
+
+
+
+// Evaluación con mayor ponderación
+$arrayponderaciones = array();
+
+for ($e=1; $e<=$i-1; $e++)
+{
+	array_push($arrayponderaciones, "${'ponderacion'.$e}");
+}
+$ponderacionmasalta = max($arrayponderaciones);
+$posicionealta = array_search("$ponderacionmasalta",$arrayponderaciones)+1;
+
+echo "Tu evaluación que pondera más es ${'evaluacion'.$posicionealta}, deberías enfocarte más en ésta";
 
 // Show the page footer
 echo $OUTPUT->footer();

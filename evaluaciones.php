@@ -31,11 +31,16 @@ $grado = required_param ( 'grado', PARAM_INT );
 $nevaluaciones = required_param ( 'nevaluaciones', PARAM_INT );
 
 // VER SI VARIABLES SON NULL
-echo $nombre;
-echo $duracion;
-echo $grado;
-echo $pdeseado;
-echo $nevaluaciones;
+echo '<table width=100%>
+	<tr bgcolor=#424242 >';
+echo '<td align="center" style="color:#FBEFF5"><h3>'. $nombre .'</h3></td>';
+echo '<td></td>';
+echo '</tr></table><br>';
+
+//echo $duracion;
+//echo $grado;
+//echo $pdeseado;
+//echo $nevaluaciones;
 
 // Insertar en la tabla cursos de la base de datos
 
@@ -56,10 +61,10 @@ $idcurso = $DB->insert_record ( 'cursos', $recordcursos );
 echo '
 <form action="notas.php" method="post">
 
-<table style="width:100%">
+<table align="center">
 <tr>
-<td> ' . get_string('evaluaciones','local_simulador') . '</td>
-<td> ' . get_string('ponderacion','local_simulador') . '</td>
+<td align="center"> ' . get_string('evaluaciones','local_simulador') . '</td>
+<td align="center"> ' . get_string('ponderacion','local_simulador') . '</td>
 </tr> ';
 
 
@@ -69,17 +74,18 @@ for ($i=1; $i<= $nevaluaciones; $i++)
 echo '
 		
 <tr>
-<td><input type="text" name="evaluacion'.$i.'"></td>
-<td><input type="text" name="ponderacion'.$i.'"></td>
+<td><input type="text" name="evaluacion'.$i.'"> = </td>
+<td><input type="text" name="ponderacion'.$i.'"> % </td>
 </tr>'
 ;
 }
 
 echo '
+
+<input type="hidden" name="nevaluaciones" value=' . $nevaluaciones . '>
+<input type="hidden" name="nombre" value=' . $nombre . '>
+<tr><td></td><td><input type="submit" name="boton2" value='.get_string("siguiente","local_simulador").'> </td></tr>
 </table> 
-<br><input type="hidden" name="nevaluaciones" value=' . $nevaluaciones . '>
-<br><input type="hidden" name="nombre" value=' . $nombre . '>
-<br><input type="submit" name="boton2"> 
 </form>';
 
 // Show the page footer

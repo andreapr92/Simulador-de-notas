@@ -34,3 +34,5 @@ $string['evaluaciones']='Evaluaciones';
 $string['ponderacion']='Ponderación';
 $string ['grado']='Grado de dificultad';
 $string['pdeseado']='Promedio deseado';
+$string['numero_evaluaciones']= 'Número de evaluaciones';
+$string['siguiente']="Siguiente";

@@ -33,3 +33,5 @@ $string['evaluaciones']='Evaluations';
 $string['ponderacion']='Weight';
 $string ['grado']='Level of difficulty';
 $string['pdeseado']='Expected Average';
+$string['numero_evaluaciones']= 'Number of evaluations';
+$string['siguiente']="Next";
